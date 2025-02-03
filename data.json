@@ -1,0 +1,19 @@
+{
+    "users" : [
+        {
+            "id": 1,
+            "fullName":{
+                "firstName": "Leanne",
+                "lastName": "Graham"
+            },
+            "address": "Kulas Light, Apt. 556, Gwenborough, 92998-3874",
+            "phone": "1-770-736-8031 x56442",
+            "birthday": "1992-12-12",
+            "profileImage": "https://via.placeholder.com/150",
+            "email": "rBQ4H@example.com",
+            "password": "password123",
+            "role": "collector"
+        }
+
+    ]
+}
