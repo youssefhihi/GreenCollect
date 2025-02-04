@@ -1,4 +1,4 @@
 export enum UserType {
     COLLECTOR = 'collector',
-    INDIVIDUAL = 'client'
+    CLIENT = 'client'
   }

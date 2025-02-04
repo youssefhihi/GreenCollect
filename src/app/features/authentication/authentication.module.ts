@@ -10,12 +10,14 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from '../../state/effects/user/user.effects';
 import { userReducer } from '../../state/reducers/user/user.reducer';
+import { RegisterComponent } from './components/register/register.component';
 
 
 @NgModule({
   declarations: [
     AuthenticationComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     CommonModule,
