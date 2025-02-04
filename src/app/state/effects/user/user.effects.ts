@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UserActions } from '../../actions/user/user.actions';
+import { UpdateProfileActions, UserActions } from '../../actions/user/user.actions';
 import { catchError, map, merge, mergeMap, of, tap } from 'rxjs';
-import { AuthService } from '../../../features/authentication/features/authentication/services/authentication/auth.service';
+import { AuthService } from '../../../features/authentication/services/authentication/auth.service';
 
 
 
@@ -22,6 +22,32 @@ export class UserEffects {
       this.authService.login(action.email, action.password).pipe(
         map((data) => UserActions.userLoginSuccess({ data })),
         catchError((error) => of(UserActions.userLoginFailure({ error })))
+      )
+    )
+    );
+  });
+
+  register$ = createEffect(() => {
+    return this.actions$.pipe(
+    ofType(UserActions.userRegister),
+    tap((action) => console.log('User register action', action)),
+    mergeMap((action) => 
+      this.authService.register(action.user).pipe(
+        map((success) => UserActions.userRegisterSuccess({ success })),
+        catchError((error) => of(UserActions.userRegisterFailure({ error })))
+      )
+    )
+    );
+  });
+
+  updateProfile$ = createEffect(() => {
+    return this.actions$.pipe(
+    ofType(UpdateProfileActions.updateProfile),
+    tap((action) => console.log('Update profile action', action)),  
+    mergeMap((action) => 
+      this.authService.updateProfile(action.data).pipe(
+        map((data) => UpdateProfileActions.updateProfileSuccess({ data })),
+        catchError((error) => of(UpdateProfileActions.updateProfileFailure({ error })))
       )
     )
     );

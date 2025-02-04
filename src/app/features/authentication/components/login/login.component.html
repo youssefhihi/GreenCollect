@@ -10,7 +10,8 @@
       <div class="max-w-md w-full p-6">
         <h1 class="text-3xl font-semibold mb-6 text-black text-center">Sign In</h1>
         <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">Join to Our Community with all time access and free </h1>
-        <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+            <div class="space-y-4">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
             <input type="email"  
@@ -26,9 +27,10 @@
           <div>
             <button  class="cursor-pointer w-full bg-black text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Sign In</button>
           </div>
+        </div>
         </form>
         <div class="mt-4 text-sm text-gray-600 text-center">
-          <p>You don’t have an account? <span  class="text-black hover:underline cursor-pointer">Sign up here</span>
+          <p>You don't have an account? <span  class="text-black hover:underline cursor-pointer">Sign up here</span>
           </p>
         </div>
       </div>

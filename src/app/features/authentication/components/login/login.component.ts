@@ -44,9 +44,8 @@ export class LoginComponent {
       return;
     }
     const { email, password } = this.loginForm.value;
+    this.store.dispatch(UserActions.userLogin({ email, password }));
 
-    this.store.dispatch(UserActions.userLogin({ email, password }));    
   }
-
 
 }

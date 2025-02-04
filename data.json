@@ -1,19 +1,122 @@
 {
-    "users" : [
-        {
-            "id": 1,
-            "fullName":{
-                "firstName": "Leanne",
-                "lastName": "Graham"
-            },
-            "address": "Kulas Light, Apt. 556, Gwenborough, 92998-3874",
-            "phone": "1-770-736-8031 x56442",
-            "birthday": "1992-12-12",
-            "profileImage": "https://via.placeholder.com/150",
-            "email": "rBQ4H@example.com",
-            "password": "password123",
-            "role": "collector"
-        }
-
-    ]
+  "users": [
+    {
+      "id": "1",
+      "fullName": {
+        "firstName": "Leanne",
+        "lastName": "Graham"
+      },
+      "address": "Kulas Light, Apt. 556, Gwenborough, 92998-3874",
+      "phone": "1-770-736-8031 x56442",
+      "birthday": "1992-12-12",
+      "profileImage": "https://via.placeholder.com/150",
+      "email": "rBQ4H@example.com",
+      "password": "password123",
+      "role": "collector"
+    },
+    {
+      "id": "2e8b",
+      "fullName": {
+        "firstName": "Corporis corporis si",
+        "lastName": "Non et omnis tenetur"
+      },
+      "birthday": "1989-11-20",
+      "phone": "1234567890",
+      "address": "Sint labore minus ne",
+      "city": "Aspernatur aut volup",
+      "email": "rinu@mailinator.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    },
+    {
+      "id": "39c1",
+      "fullName": {
+        "firstName": "Voluptate quibusdam ",
+        "lastName": "Magnam aliquid assum"
+      },
+      "birthday": "2016-07-23",
+      "phone": "1234567890",
+      "address": "Incididunt nulla mag",
+      "city": "Dolorem at qui quo v",
+      "email": "rinu@mailinator.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "role": "client"
+    },
+    {
+      "id": "4594",
+      "fullName": {
+        "firstName": "Iure quam libero ull",
+        "lastName": "Temporibus cupidatat"
+      },
+      "birthday": "1974-04-07",
+      "phone": "1234567890",
+      "address": "Quaerat eu nihil vol",
+      "city": "Molestiae ut perfere",
+      "email": "dabu@mailinator.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "role": "client"
+    },
+    {
+      "id": "0886",
+      "fullName": {
+        "firstName": "Ipsum impedit paria",
+        "lastName": "Omnis animi similiq"
+      },
+      "birthday": "1974-09-18",
+      "phone": "1234567890",
+      "address": "Aut et a harum et qu",
+      "city": "Aut dolorem et ut ei",
+      "email": "subenazuho@mailinator.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "role": "client"
+    },
+    {
+      "id": "054e",
+      "fullName": {
+        "firstName": "Facere veritatis vel",
+        "lastName": "Ipsum vero nobis ea"
+      },
+      "birthday": "2023-05-10",
+      "phone": "0987654321",
+      "address": "Temporibus placeat ",
+      "city": "Ut nulla aut sunt q",
+      "email": "mecaboly@mailinator.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "role": "client"
+    },
+    {
+      "id": "5560",
+      "fullName": {
+        "firstName": "Quidem velit amet v",
+        "lastName": "Quos fugiat iusto re"
+      },
+      "birthday": "2023-01-06",
+      "phone": "1234567890",
+      "address": "In amet iure doloru",
+      "city": "Ipsum quisquam amet",
+      "email": "vusicos@mailinator.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "role": "client"
+    },
+    {
+      "id": "ecc8",
+      "fullName": {
+        "firstName": "Placeat ullam modi ",
+        "lastName": "Adipisci pariatur S"
+      },
+      "birthday": "1991-06-03",
+      "phone": "1234567890",
+      "address": "Quisquam sint sed v",
+      "city": "Blanditiis dolor sit",
+      "email": "qujete@SFDG.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "role": "client"
+    }
+  ]
 }
