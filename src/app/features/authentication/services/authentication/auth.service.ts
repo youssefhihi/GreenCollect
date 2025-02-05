@@ -1,3 +1,4 @@
+import { UserInfoService } from './../../../../core/service/user-info.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, switchMap, tap, throwError } from 'rxjs';
@@ -9,7 +10,7 @@ import { User } from '../../../../model/user/user.model';
 export class AuthService {
   private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private UserInfoService: UserInfoService) { }
 
   login(email: string, password: string): Observable<User> {
     return this.http.get<User[]>(`${this.apiUrl}/users?email=${email}&password=${password}`)
@@ -29,7 +30,7 @@ export class AuthService {
 
   
   register(user: User): Observable<string> {
-    return this.http.get<User[]>(`${this.apiUrl}/users?email=${user.email}`).pipe(
+    return this.http.get<User[]>(`${this.apiUrl}/users?id=${user.id}`).pipe(
       switchMap(existingUsers => {
         if (existingUsers.length > 0) {
           return throwError(() => new Error('Email already exists'));

@@ -11,6 +11,19 @@ export class UserInfoService {
 
   constructor(private http: HttpClient) { }
 
+  getAuthUser(): Observable<User> {
+    const token = this.getToken();
+    if (token !== null) {
+      const decoded = atob(token);
+      const [email, password] = decoded.split(':');
+  
+      if (!email || !password) {
+        console.error('Invalid token format');
+        return throwError(() => new Error('Invalid token format'));
+      }
+      return this.getUserByEmail(email);
+    }
+    return throwError(() => new Error('Token not found'));}
   getUserByEmail(email: string): Observable<User> {
     return this.http.get<User[]>(`${this.apiUrl}/users?email=${email}`)
       .pipe(

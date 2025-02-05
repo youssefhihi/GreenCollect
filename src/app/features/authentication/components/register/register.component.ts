@@ -29,8 +29,10 @@ export class RegisterComponent {
     }),
     birthday: ['', [Validators.required]],
     phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-    address: ['', [Validators.required, Validators.minLength(2)]],
-    city: ['', [Validators.required, Validators.minLength(2)]],
+    address: this.fb.group({
+      city : ['', [Validators.required, Validators.minLength(2)]],
+      zipcode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
+    }),
     email: ['', [Validators.required, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],

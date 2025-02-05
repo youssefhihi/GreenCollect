@@ -11,5 +11,5 @@ export const isClientGuard: CanActivateFn = (route, state) => {
       return false;
     }
     return true;
-  return true;
-};
+
+  };

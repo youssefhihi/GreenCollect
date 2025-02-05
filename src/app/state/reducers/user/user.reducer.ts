@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserActions } from '../../actions/user/user.actions';
+import { UpdateProfileActions, UserActions } from '../../actions/user/user.actions';
 import { User } from '../../../model/user/user.model';
 
 export const userFeatureKey = 'user';
@@ -57,6 +57,21 @@ export const userReducer = createReducer(
     data: null,
     isAuthenticated: false,
     success: null,
+  })),
+  on(UpdateProfileActions.updateProfile, state => ({ ...state, loading: true })),
+  on(UpdateProfileActions.updateProfileSuccess, (state, { data }) => ({
+    ...state,
+    loading: false,
+    data: data,
+    isAuthenticated: true,
+    error: null
+  })),
+  on(UpdateProfileActions.updateProfileFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error: error,
+    data: null,
+    isAuthenticated: true,
   }))
 );
 
