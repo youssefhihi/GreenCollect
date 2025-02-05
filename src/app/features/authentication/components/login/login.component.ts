@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserActions } from '../../../../state/actions/user/user.actions';
 import { selectUser, selectUserError } from '../../../../state/selectors/user/user.selectors';
+import { getErrorMessage, isFieldInvalid } from '../../../../shared/utils/validation/validateFields';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +16,8 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private store = inject(Store);
 
-  error$ = this.store.select(selectUserError).subscribe(
-    (error) => {
-      if (error) {
-        console.log('Error', error);
-      }
-    }
-  );
+
+  error$ = this.store.select(selectUserError);
 
   user$ = this.store.select(selectUser).subscribe(
     (user) => {
@@ -48,4 +44,13 @@ export class LoginComponent {
 
   }
 
+
+  isFieldInvalid(field: string): boolean {
+    return isFieldInvalid(field, this.loginForm, this.isSubmitted);
+  }
+  
+
+  getErrorMessage(field: string): string | null {
+   return getErrorMessage(this.loginForm, field);
+  }
 }

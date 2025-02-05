@@ -6,7 +6,10 @@ export interface User {
         firstName: string;
         lastName: string
     };
-    address: string;
+    address: {
+        city: string;
+        zipcode: string;
+    };
     phone: string;
     birthday: string;
     profileImage: string;
