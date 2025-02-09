@@ -12,10 +12,11 @@
         "city": "Priscilla",
         "zipcode": "40000"
       },
-      "email": "mucupem@mailinator.com",
+      "email": "youssef@mailinator.com",
       "password": "password123",
       "confirmPassword": "password123",
       "role": "client"
     }
-  ]
+  ],
+  "collects": []
 }

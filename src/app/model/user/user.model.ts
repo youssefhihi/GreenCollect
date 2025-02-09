@@ -1,7 +1,7 @@
 import { UserType } from "../enum/userType.enum";
 
 export interface User {
-    id: number;
+    id: string;
     fullName:{
         firstName: string;
         lastName: string
