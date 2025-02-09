@@ -19,7 +19,7 @@ export function isFieldInvalid(field: string, form: FormGroup, isSubmitted: bool
 
     if (control?.hasError('pattern'))
       return `must be valid.`;
-
+    if (control?.hasError('min'))   return `doit être au moins ${control.errors?.['min']?.min}.`;
     if (control?.hasError('confirmPassword')) 
       return 'do not match with password.';
     return null;

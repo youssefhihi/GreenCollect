@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, firstValueFrom, map, Observable, throwError } from 'rxjs';
 import { User } from '../../model/user/user.model';
 
 @Injectable({
@@ -11,6 +11,17 @@ export class UserInfoService {
 
   constructor(private http: HttpClient) { }
 
+
+  getUserId(): string | null {
+    this.getAuthUser().subscribe((user) => {
+      if (user) {
+        return user.id;
+      } else {
+        return null;
+      }
+    });
+    return null;
+  }
   getAuthUser(): Observable<User> {
     const token = this.getToken();
     if (token !== null) {
@@ -66,5 +77,7 @@ export class UserInfoService {
     return false;
   }
   
+
+
 
 }

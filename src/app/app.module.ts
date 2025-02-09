@@ -21,6 +21,7 @@ import { provideHttpClient } from '@angular/common/http';
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }), 
   ],
+  
   providers: [
     provideHttpClient(),
   ],

@@ -1,0 +1,112 @@
+<form [formGroup]="collectForm" (ngSubmit)="onSubmit()" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+  
+    <!-- Waste Type -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Type de Déchet:</label>
+      <select formControlName="wasteType" class="w-full p-2 border rounded-lg">
+        <option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</option>
+      </select>
+      <span class="ml-2 text-red-500 text-sm font-medium"
+                  *ngIf="getErrorMessage('wasteType')"
+                  >
+                  {{ "Type de Dechet " + getErrorMessage('wasteType') }}
+    </span>
+    </div>
+  
+  
+    <!-- Estimated Weight -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Poids Estimé (g) :</label>
+      <input type="number" formControlName="estimatedWeight" min="1000" class="w-full p-2 border rounded-lg" />
+      <span class="ml-2 text-red-500 text-sm font-medium"
+            *ngIf="getErrorMessage('estimatedWeight')"
+            >
+            {{ "Poids " + getErrorMessage('estimatedWeight') }}
+        </span>
+    </div>
+  
+    <!-- Address -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Adresse:</label>
+      <div class="flex gap-2" formGroupName="address">
+        <div class=" flex flex-col w-full">
+            <input type="text" formControlName="city" placeholder="Ville" class="w-full p-2 border rounded-lg" />
+            <span class="ml-2 text-red-500 text-sm font-medium"
+                  *ngIf="getErrorMessage('address.city')"
+                  >
+                  {{ "Ville " + getErrorMessage('address.city') }}
+            </span>
+        </div>
+        <div class=" flex flex-col w-full">
+            <input type="text" formControlName="zipecode" placeholder="Code Postal" class="w-full p-2 border rounded-lg" />
+            <span class="ml-2 text-red-500 text-sm font-medium"
+                  *ngIf="getErrorMessage('address.zipecode')"
+                  >
+                  {{ "Code Postal " + getErrorMessage('address.zipecode') }}
+            </span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Date -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Date de Collecte:</label>
+      <input type="date" formControlName="date" class="w-full p-2 border rounded-lg" />
+      <span class="ml-2 text-red-500 text-sm font-medium"
+            *ngIf="getErrorMessage('date')"
+            >
+            {{ "Date " + getErrorMessage('date') }}
+        </span>
+    </div>
+  
+    <!-- Time Slot -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Créneau Horaire:</label>
+      <input type="time" formControlName="timeSlot" class="w-full p-2 border rounded-lg" />
+      <span class="ml-2 text-red-500 text-sm font-medium"
+            *ngIf="getErrorMessage('timeSlot')"
+            >
+            {{ "Créneau Horaire " + getErrorMessage('timeSlot') }}
+        </span>
+    </div>
+  
+    <!-- Photo Upload -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Ajouter une photo :</label>
+      <input type="file" (change)="onFileSelected($event)" class="w-full p-2 border rounded-lg" />
+      <span class="ml-2 text-red-500 text-sm font-medium"
+      *ngIf="photos.invalid && isSubmitted">
+        Une photo est requise.
+        </span>
+
+    </div>
+  
+    <!-- Affichage des photos -->
+    <div class="mb-4" *ngIf="photos.controls.length > 0">
+      <label class="block text-gray-700 font-bold mb-2">Photos Sélectionnées :</label>
+      <div class="grid grid-cols-3 gap-2">
+        <div *ngFor="let photo of photos.controls; let i = index" class="relative">
+          <img [src]="photo.value" class="w-full h-24 object-cover rounded-lg shadow-md">
+          <button type="button" (click)="removePhoto(i)" class="absolute top-0 right-0 bg-red-600 text-white px-2 py-1 text-xs rounded-full">X</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Notes -->
+    <div class="mb-4">
+      <label class="block text-gray-700 font-bold mb-2">Notes:</label>
+      <textarea formControlName="note" class="w-full p-2 border rounded-lg"></textarea>
+      <span class="ml-2 text-red-500 text-sm font-medium"
+            *ngIf="getErrorMessage('note')"
+            >
+            {{ "Notes " + getErrorMessage('note') }}
+        </span>
+    </div>
+  
+    <!-- Submit Button -->
+    <button type="submit"  class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+      Soumettre
+    </button>
+  
+  </form>
+  

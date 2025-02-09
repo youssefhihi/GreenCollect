@@ -1,0 +1,14 @@
+<div class="mx-auto container py-8">
+    <div *ngIf="successMessage" class="bg-green-200 text-green-800 p-4 rounded-md mb-4">
+      {{ successMessage }}
+    </div>
+    
+    <div class="flex flex-wrap items-center justify-center gap-28">
+      <app-collect-card
+        *ngFor="let collect of collectRequests"
+        [collect]="collect"
+        (collectDeleted)="onCollectDeleted($event)"
+      ></app-collect-card>
+    </div>
+  </div>
+  
