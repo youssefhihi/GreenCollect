@@ -1,50 +1,111 @@
 <div class="mx-auto container py-8">
-
-    <div class="flex flex-wrap items-center justify-center gap-28">
+    <div class="flex flex-wrap gap-8 justify-center">
+      <table class="min-w-full table-auto bg-white rounded-lg shadow-md">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-4 text-center">Client</th>
+            <th class="p-4 text-center">Waste Type</th>
+            <th class="p-4 text-center">Status</th>
+            <th class="p-4 text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let collect of collectRequests">
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                            <img class="h-10 w-10 rounded-full" 
+                                [src]="photoUrl(collect.user)"
+                                (error)="handleError($event)" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                                {{ collect.user.fullName.firstName }} {{ collect.user.fullName.lastName }}
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                {{ collect.user.email }}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            <td class="p-4 text-center ">{{ collect.wasteType }}</td>
+            <td class="p-4 text-center">
+              <span
+                [ngClass]="
+                collect.status === 'En attente' ? 'bg-yellow-400' :
+                collect.status === 'Occupée' ? 'bg-gray-500' :
+                collect.status === 'En cours' ? 'bg-blue-300' :
+                collect.status === 'Validée' ? 'bg-green-300' :
+                collect.status === 'Rejetée' ? 'bg-red-300' :
+                ''"
+                class="px-3 py-1 rounded-full text-white"
+              >
+                {{ collect.status }}
+              </span>
+            </td>
+            <td class="p-4 text-center space-x-2">
+              <button (click)="openPopup(collect)" class= "cursor-pointer bg-blue-500 text-white px-3 py-1 rounded-lg">Read More</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="popupVisible" class="h-screen w-full animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none  " >
+        <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
+     <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white">
+        <div *ngIf="error$ | async as error" class="flex justify-center w-full">
+            <app-toast-alert type="error" [message]='error'></app-toast-alert> 
+          </div>
+          <div *ngIf="successMessage$ | async as msg" class="flex justify-center w-full">
+            <app-toast-alert [closeAble]="true" type="success" [message]='msg'></app-toast-alert> 
+          </div>
+          <h2 class="text-xl font-semibold mb-4">Collect Details</h2>
+          
+          <!-- Display Images if available -->
+          <div class="mb-4" *ngIf="selectedCollect?.photos">
+            <strong>Photos:</strong>
+            <div class="flex flex-wrap space-x-4">
+                <img *ngFor="let photo of selectedCollect?.photos" [src]="photo"
+                    (error)="handleError($event)"
+                    alt="Image de collecte"
+                    class="focus:outline-none  h-20 object-cover w-20" />
+            </div>
+          </div>
+          <div class="mb-4">
+            <strong>Waste Type:</strong> {{ selectedCollect?.wasteType }}
+          </div>
+          <div class="mb-4">
+            <strong>Status:</strong> {{ selectedCollect?.status }}
+          </div>
+          <div class="mb-4">
+            <strong>Date:</strong> {{ selectedCollect?.date }}
+          </div>
+          <div class="mb-4">
+            <strong>Address:</strong> {{ selectedCollect?.address?.city }}, {{ selectedCollect?.address?.zipecode }}
+          </div>
+          <div class="mb-4">
+            <strong>Note:</strong> {{ selectedCollect?.note }}
+          </div>
       
-<div *ngFor=" let collect of collectRequests" class="focus:outline-none mx-2 w-72 xl:mb-0 mb-8 hover:shadow-lg ">
-    <div >
-        <img [src]=""
-        (error)="handleError($event)"
-        alt="Image de collecte"
-        class="focus:outline-none w-full h-44" />
-   
-
-    </div>
-    <div class="bg-white">
-        <div class="flex items-center justify-between px-4 pt-4">
-            <div>
-               
-            </div>
-            <div class="bg-yellow-200 py-1.5 px-6 rounded-full">
-                <p tabindex="0" class="focus:outline-none text-xs text-yellow-700">{{collect?.status}}</p>
-            </div>
+          <form [formGroup]="updateStatusForm ">
+            <select 
+              formControlName="status" 
+              (change)="onStatusChange(selectedCollect!)" 
+              class="bg-gray-200 text-black px-3 py-1 rounded-lg w-full text-center"
+            >
+                <option disabled value=""> modifier l'etat de la collecte</option>
+                <option value="En attente">En attente</option>
+                <option value="Occupée">Occupée</option>
+                <option value="En cours">En cours</option>
+                <option value="Validée">Validée</option>
+                <option value="Rejetée">Rejetée</option>
+            </select>
+          </form>
+          <!-- Close Button -->
+          <button (click)="closePopup()" class="bg-gray-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-gray-700">Close</button>
         </div>
-        <div class="p-4">
-            <div class="flex items-center">
-                <h2 tabindex="0" class="focus:outline-none text-lg font-semibold">{{collect?.wasteType}}</h2>
-                <p tabindex="0" class="focus:outline-none text-xs text-gray-600 pl-5">{{collect?.date}}</p>
-            </div>
-            <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">{{collect?.note}}</p>
-            <div class="flex mt-4">
-                <div>
-                    <p tabindex="0" class="focus:outline-none text-xs text-gray-600 px-2 bg-gray-200 py-1">{{collect?.timeSlot}}</p>
-                </div>
-                <div class="pl-2">
-                    <p tabindex="0" class="focus:outline-none text-xs text-gray-800 px-2 bg-gray-200 py-1">weight :{{collect?.estimatedWeight}}</p>
-                </div>
-            </div>
-            <div class="flex items-center justify-between py-4">
-                <h2 tabindex="0" class="focus:outline-none text-indigo-700 text-xs font-semibold">{{collect?.address?.zipecode}}, {{collect?.address?.city}}</h2>
-                <button  class=" cursor-pointer bg-red-200 border border-red-500 px-2 py-1 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg ">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex items-center text-red-500 mx-auto" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-    </div>
+      </div>
+      
   </div>
   

@@ -27,10 +27,12 @@ export const collectReducer = createReducer(
     collects: collects,
     loading: true, 
     error: null,
+    success: null
   })),
   on(CollectActions.collectAddCollects, state => ({ 
     ...state,
     loading: true,
+    success: null
   })),
   on(CollectActions.collectAddCollectsSuccess, (state, { data }) => ({ 
     ...state,
@@ -41,15 +43,18 @@ export const collectReducer = createReducer(
     ...state,
     loading: false,
     error: error,
+    success: null
   })),
 
   on(UpdateCollectStatusActions.updateCollectStatusUpdate, state => ({ 
     ...state,
-    loading: true 
+    loading: true, 
+    success: null
   })),
   on(UpdateCollectStatusActions.updateCollectStatusUpdateSuccess, (state, { data }) => ({ 
     ...state,
     loading: false,
+    success: 'La Collection a bien été mise à jour',
     collects: state.collects.map(collect =>
       collect.id === data.id ? { ...collect, status: data.status } : collect
     ),
@@ -58,11 +63,13 @@ export const collectReducer = createReducer(
     ...state,
     loading: false,
     error: error,
+    success: null
   })),
 
   on(DeleteCollectActions.deleteCollectDelete, state => ({ 
     ...state,
-    loading: true 
+    loading: true ,
+    success: null
   })),
   on(DeleteCollectActions.deleteCollectDeleteSuccess, (state, { success, collectId }) => ({ 
     ...state,
@@ -74,5 +81,6 @@ export const collectReducer = createReducer(
     ...state,
     loading: false,
     error: error,
+    success: null,
   })),
 );

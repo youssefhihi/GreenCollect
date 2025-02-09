@@ -22,7 +22,7 @@ export class CollectCardComponent {
   handleError(event: Event) {
     (event.target as HTMLImageElement).src = 'assets/imgs/noImg.jpg';
   }
-  get photoUrl(): string {
+   photoUrl(): string {
     return this.collect?.photos?.length ? this.collect.photos[0] : 'assets/imgs/noImg.jpg';
   }
   

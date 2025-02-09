@@ -1,11 +1,23 @@
 <form [formGroup]="collectForm" (ngSubmit)="onSubmit()" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
   
     <!-- Waste Type -->
-    <div class="mb-4">
-      <label class="block text-gray-700 font-bold mb-2">Type de Déchet:</label>
-      <select formControlName="wasteType" class="w-full p-2 border rounded-lg">
-        <option *ngFor="let type of wasteTypes" [value]="type">{{ type }}</option>
-      </select>
+    <div class="mb-4 w-full">
+        <label class="block text-gray-700 font-bold mb-2">Type de Déchet:</label>
+        <div *ngFor="let type of wasteTypes" class="flex flex-wrap items-center space-x-2 mb-2 w-full">
+          <input 
+            type="checkbox" 
+            [value]="type" 
+            (change)="onCheckboxChange($event, type)" 
+            [checked]="selectedWasteTypes.includes(type)"
+            class="hidden peer"
+            [id]="type"
+          />
+          <label 
+            [for]="type" 
+            class="px-4 py-2 w-full text-center max-w-1/2 mx-auto border rounded-lg cursor-pointer peer-checked:bg-blue-500 peer-checked:text-white">
+            {{ type }}
+          </label>
+        </div>        
       <span class="ml-2 text-red-500 text-sm font-medium"
                   *ngIf="getErrorMessage('wasteType')"
                   >
@@ -25,28 +37,7 @@
         </span>
     </div>
   
-    <!-- Address -->
-    <div class="mb-4">
-      <label class="block text-gray-700 font-bold mb-2">Adresse:</label>
-      <div class="flex gap-2" formGroupName="address">
-        <div class=" flex flex-col w-full">
-            <input type="text" formControlName="city" placeholder="Ville" class="w-full p-2 border rounded-lg" />
-            <span class="ml-2 text-red-500 text-sm font-medium"
-                  *ngIf="getErrorMessage('address.city')"
-                  >
-                  {{ "Ville " + getErrorMessage('address.city') }}
-            </span>
-        </div>
-        <div class=" flex flex-col w-full">
-            <input type="text" formControlName="zipecode" placeholder="Code Postal" class="w-full p-2 border rounded-lg" />
-            <span class="ml-2 text-red-500 text-sm font-medium"
-                  *ngIf="getErrorMessage('address.zipecode')"
-                  >
-                  {{ "Code Postal " + getErrorMessage('address.zipecode') }}
-            </span>
-        </div>
-      </div>
-    </div>
+  
   
     <!-- Date -->
     <div class="mb-4">

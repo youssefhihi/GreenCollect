@@ -17,7 +17,7 @@ import { map } from 'rxjs';
 })
 export class RequestFormComponent {
   collectForm!: FormGroup;
-  wasteTypes = Object.values(WasteType); 
+  wasteTypes = [WasteType.glass, WasteType.metal, WasteType.paper, WasteType.plastic]; 
 
   private fb = inject(FormBuilder);
   private router = inject(Router);
@@ -25,22 +25,31 @@ export class RequestFormComponent {
   private store = inject(Store);
 
   isSubmitted = false;
+  selectedWasteTypes: string[] = []; 
 
+  onCheckboxChange(event: Event, type: string) {
+    const checked = (event.target as HTMLInputElement).checked;
+  
+    if (checked) {
+      this.selectedWasteTypes.push(type);
+    } else {
+      this.selectedWasteTypes = this.selectedWasteTypes.filter(t => t !== type);
+    }
+  
+    // Met à jour le formulaire avec les valeurs sélectionnées
+    this.collectForm.controls['wasteType'].setValue(this.selectedWasteTypes);
+  }
   ngOnInit() {
     this.userInfo.getAuthUser().subscribe((user) => {
       this.collectForm = this.fb.group({
         wasteType: ['', Validators.required],
         estimatedWeight: [1000, [Validators.required, Validators.min(1000)]],
-        address: this.fb.group({
-          city: ['', Validators.required],
-          zipecode: ['', Validators.required]
-        }),
-        userId: [user.id],
+        user: [user],
         date: ['', Validators.required],
         timeSlot: ['', Validators.required],
         photos: this.fb.array([], [this.validatePhotos()]),
         note: [''],
-        status: ['pending']
+        status: ['En attente'],
       });
     });
   }

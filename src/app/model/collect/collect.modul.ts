@@ -1,8 +1,9 @@
 import { WasteType } from "../enum/wasteType";
+import { User } from "../user/user.model";
 export interface Collect {
     id: string;
-    wasteType: WasteType;
-    userId: string;
+    wasteType: WasteType[];
+    user: User;
     photos?: string[];
     estimatedWeight: number;
     address: {
@@ -12,5 +13,5 @@ export interface Collect {
     date: string;
     timeSlot: string; 
     note?: string;
-    status: 'pending' | 'in progress' | 'completed';
+    status: 'En attente' | 'Occupée' | 'En cours' | 'Validée' | 'Rejetée';
 }
