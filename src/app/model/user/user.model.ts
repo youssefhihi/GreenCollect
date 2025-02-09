@@ -13,7 +13,6 @@ export interface User {
     phone: string;
     birthday: string;
     profileImage: string;
-    city: string;
     email: string;
     password: string;
     role : UserType;

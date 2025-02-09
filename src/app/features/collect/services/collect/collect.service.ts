@@ -66,8 +66,8 @@ export class CollectService {
   }
 
 
-  getAvailableCollections(city: string): Observable<Collect[]> {
-    return this.http.get<Collect[]>(`${this.apiUrl}?city=${city}&status=en_attente`);
+  getCollections(city: string): Observable<Collect[]> {
+    return this.http.get<Collect[]>(`${this.apiUrl}?address.city=${city}`);
   }
 
   updateCollectionStatus(id: string, status: string): Observable<Collect> {
