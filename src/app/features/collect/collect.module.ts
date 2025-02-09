@@ -12,6 +12,9 @@ import { RequestFormComponent } from './components/request-form/request-form.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { collectReducer } from '../../state/reducers/collect/collect.reducer';
+import { SharedModule } from '../../shared/shared.module';
+import { PointsEffects } from '../../state/effects/points/points.effects';
+import { pointsReducer } from '../../state/reducers/points/points.reducer';
 
 
 @NgModule({
@@ -27,7 +30,9 @@ import { collectReducer } from '../../state/reducers/collect/collect.reducer';
     CollectRoutingModule,
     ReactiveFormsModule,
     StoreModule.forFeature('collect', collectReducer),
-    EffectsModule.forFeature([CollectEffects])
+    StoreModule.forFeature('points', pointsReducer),
+    EffectsModule.forFeature([CollectEffects, PointsEffects]),
+    SharedModule
   ]
 })
 export class CollectModule { }

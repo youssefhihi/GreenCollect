@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserInfoService } from '../../../../core/service/user-info.service';
 import { environment } from '../../../../../environments/environment';
-import { catchError, Observable, switchMap } from 'rxjs';
+import { catchError, map, Observable, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,19 +19,23 @@ export class CollectService {
         return this.getUserCollections().pipe(
           switchMap((collections: Collect[]) => {
             const pendingRequests = collections.filter(
-              (req) => req.userId === request.userId && req.status === 'pending'
+              (req) => req.user.id === request.user.id && req.status === 'En attente'
             );
   
-            const totalWeight = pendingRequests.reduce((sum, req) => sum + req.estimatedWeight, 0);
-  
+            let totalWeight = 0;
+            pendingRequests.forEach((req) => {
+              totalWeight += req.estimatedWeight;
+            });
+            console.log("pendingRequests",pendingRequests);
             if (pendingRequests.length >= 3) {
               throw new Error("Vous avez atteint la limite de 3 demandes en attente.");
             }
+
   
             if (request.estimatedWeight < 1000) {
               throw new Error("Le poids minimal doit être de 1000g.");
             }
-  
+              console.log("totalWeight",totalWeight);
             if (totalWeight + request.estimatedWeight > 10000) {
               throw new Error("Le poids total ne doit pas dépasser 10 kg.");
             }
@@ -67,7 +71,10 @@ export class CollectService {
 
 
   getCollections(city: string): Observable<Collect[]> {
-    return this.http.get<Collect[]>(`${this.apiUrl}?address.city=${city}`);
+    console.log("city",city);
+   return this.http.get<Collect[]>(this.apiUrl).pipe(
+      map((collects) => collects.filter(c => c.user.address.city === city))
+    );;
   }
 
   updateCollectionStatus(id: string, status: string): Observable<Collect> {
