@@ -10,7 +10,7 @@ const routes: Routes = [
       component: ProfileComponent, 
       canActivate:[isAuthGuard],
       children: [
-        { path: 'update', component: UpdateFormComponent }
+        { path: '', component: UpdateFormComponent }
       ]
     }
 ];

@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { SvgIconComponent } from './components/svg-icon/svg-icon.component';
 import { ToastAlertComponent } from './components/toast-alert/toast-alert.component';
 import { Router, RouterModule } from '@angular/router';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 
 @NgModule({
   declarations: [
     SvgIconComponent,
-    ToastAlertComponent
+    ToastAlertComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { Router, RouterModule } from '@angular/router';
   ],
   exports: [
     SvgIconComponent,
-    ToastAlertComponent
+    ToastAlertComponent,
+    FooterComponent
   ]
 })
 export class SharedModule { }

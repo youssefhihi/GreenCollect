@@ -16,7 +16,10 @@ export class UpdateFormComponent {
   private fb = inject(FormBuilder);
   private userInfo = inject(UserInfoService);
   private store = inject(Store);
+
+  profileImage: string = 'assets/imgs/noImg.jpg';
   authUser : User | null = null;
+
   formGroup = this.fb.group({
       fullName: this.fb.group({
         firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -26,11 +29,10 @@ export class UpdateFormComponent {
       birthday: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       address: this.fb.group({
-        street: ['', [Validators.required, Validators.minLength(2)]],
-        suite: ['', [Validators.required, Validators.minLength(2)]],
         city : ['', [Validators.required, Validators.minLength(2)]],
         zipcode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
       }),
+      profileImage: [''],
     });
 
     ngOnInit() {
@@ -38,17 +40,50 @@ export class UpdateFormComponent {
         if (!user) return;
         this.formGroup.patchValue(user);
         this.authUser = user;
-
       });
     }
 
-
-    onSubmit() {
-      if (this.formGroup.invalid) {
-
-        return;
-      }
-     
-  
+ onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profileImage = e.target.result;
+        this.formGroup.patchValue({ profileImage: e.target.result }); // Save to form
+      };
+      reader.readAsDataURL(file); // Convert to Base64
     }
+  }
+  onSubmit() {
+    if (this.formGroup.invalid) {
+      console.log('Formulaire invalide');
+      return;
+    }
+  
+    if (!this.authUser?.id) {
+      console.error('User ID is required but not found');
+      return; 
+    }
+  
+    const updatedUser: User = {
+      id: this.authUser.id,
+      fullName: {
+        firstName: this.formGroup.value.fullName?.firstName || '',  
+        lastName: this.formGroup.value.fullName?.lastName || '',    
+      },
+      email: this.formGroup.value.email || '', 
+      birthday: this.formGroup.value.birthday || '',  
+      phone: this.formGroup.value.phone || '',  
+      address: {
+        city: this.formGroup.value.address?.city || '', 
+        zipcode: this.formGroup.value.address?.zipcode || '', 
+      },
+      profileImage: this.formGroup.value.profileImage || '',
+      password: this.authUser.password,
+      role: this.authUser.role,  
+    };
+  
+    this.store.dispatch(UpdateProfileActions.updateProfile({ data: updatedUser }));
+  }
+  
 }

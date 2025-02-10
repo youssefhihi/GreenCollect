@@ -1,0 +1,129 @@
+<nav class="bg-gray-200 shadow shadow-gray-300  px-8 md:px-auto">
+	<div class="md:h-16 w-full h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
+		<!-- Logo -->
+		<div class="text-green-500 md:order-1">
+			Green Collect
+		</div>
+		<div class="text-gray-500 order-3 w-full md:w-auto md:order-2">
+			<ul class="flex font-semibold justify-between">
+
+				<li class="md:px-4 md:py-2 hover:text-green-500"><a  href="#about">À propos</a></li>
+				<li class="md:px-4 md:py-2 hover:text-green-400"><a href="#services">Services</a></li>
+				<li class="md:px-4 md:py-2 hover:text-green-400"><a href="#points">Points</a></li>
+
+			</ul>
+		</div>
+		<div  *ngIf="!isAuthenticated" class="order-2 md:order-3">
+			<button routerLink="/auth/login" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-gray-50 rounded-xl flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Login</span>
+            </button>
+		</div>
+        <div *ngIf="isClient" class="order-2 md:order-3">
+			<button routerLink="/collect/list" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-gray-50 rounded-xl flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Collections</span>
+            </button>
+		</div>
+        <div *ngIf="!isClient && isAuthenticated" class="order-2 md:order-3">
+			<button routerLink="/collect/requests/list" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-gray-50 rounded-xl flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span>Requests</span>
+            </button>
+		</div>
+	</div>
+</nav>
+
+
+
+
+
+
+  <!-- Section 1: Hero Section -->
+  <section class="bg-cover bg-center h-screen text-white" style="background-image: url('assets/imgs/section1.webp');">
+    <div class="h-full flex justify-center items-center">
+      <div class="text-center space-y-6 px-4 md:px-8">
+        <h1 class="text-4xl font-bold">Bienvenue sur notre Application</h1>
+        <p class="text-lg">La solution la plus simple pour gérer vos projets et améliorer votre productivité</p>
+        <div class="flex justify-center space-x-4">
+          <a href="/auth/register" class="cursor-pointer px-6 py-3 bg-green-600  rounded-lg text-white font-semibold hover:bg-transparent border-2 border-white transition">Commencer</a>
+          <a *ngIf="!isAuthenticated" routerLink="/auth/login" class="cursor-pointer px-6 py-3 bg-transparent border-2 border-white rounded-lg text-white font-semibold hover:bg-white hover:text-green-600 transition">
+            Se connecter
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Section 2: About -->
+  <section id="about" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center mb-6">À propos de nous</h2>
+      <p class="text-lg text-gray-700 text-center">
+        Nous sommes une équipe dédiée à simplifier votre gestion quotidienne à travers une application facile à utiliser. Nous offrons des fonctionnalités qui vous aident à suivre vos projets, gérer vos tâches et bien plus encore.
+      </p>
+    </div>
+  </section>
+  
+  <!-- Section 3: Services -->
+  <section id="services" class="py-20">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-10">Nos Services</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold mb-4">Gestion de Projet</h3>
+          <p class="text-gray-700">Suivez vos projets de manière simple et intuitive avec nos outils de gestion intégrés.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold mb-4">Gestion des Tâches</h3>
+          <p class="text-gray-700">Organisez vos tâches quotidiennes, suivez leur progression et atteignez vos objectifs efficacement.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold mb-4">Suivi des Performances</h3>
+          <p class="text-gray-700">Analysez votre performance avec des rapports détaillés et des statistiques sur vos progrès.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Section 4: Système de Points -->
+  <section id="points" class="py-20 bg-green-600 text-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-6 text-center">Notre Système de Points</h2>
+      <p class="text-lg text-center mb-6">
+        Gagnez des points à chaque étape accomplie sur notre plateforme. Les points peuvent être échangés contre des récompenses exclusives, des badges et des fonctionnalités supplémentaires.
+      </p>
+      <div class="flex flex-wrap justify-center gap-5">
+        <div class="bg-white text-green-600 p-6 rounded-lg shadow-lg text-center w-64">
+          <h3 class="text-2xl font-semibold mb-4">Gagner des Points</h3>
+          <p class="text-gray-700">Complétez des tâches et des projets pour accumuler des points.</p>
+        </div>
+        <div class="bg-white text-green-600 p-6 rounded-lg shadow-lg text-center w-64">
+          <h3 class="text-2xl font-semibold mb-4">Échanger des Points</h3>
+          <p class="text-gray-700">Utilisez vos points pour débloquer des récompenses exclusives.</p>
+        </div>
+        <div class="bg-white text-green-600 p-6 rounded-lg shadow-lg text-center w-64">
+          <h3 class="text-2xl font-semibold mb-4">Suivre votre Score</h3>
+          <p class="text-gray-700">Suivez votre score en temps réel et voyez votre progression.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-10">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <p>© 2025 Simple App | Tous droits réservés</p>
+      <div class="mt-4">
+        <a href="#" class="text-green-400 hover:text-green-600 mx-2">Politique de confidentialité</a>
+        <a href="#" class="text-green-400 hover:text-green-600 mx-2">Conditions d'utilisation</a>
+      </div>
+    </div>
+  </footer>
+  

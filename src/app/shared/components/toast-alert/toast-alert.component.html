@@ -19,8 +19,8 @@
         stroke-linecap="round"
       ></path>
     </svg>
-    <p class="text-xs font-semibold">Success - {{ message }}</p> <span *ngIf="linkText" routerLink="{{link}}" class=" cursor-pointer ml-2.5 mt-1 text-[10px] font-normal text-blue-600 underline "> {{ linkText}}</span>
-    <div (click)="closeAlert()" class="text-green-950 h-5 w-5 ml-2  cursor-pointer" >
+    <p class="text-xs font-semibold">Success - {{ message }}</p> <span *ngIf="linkText" [routerLink]="link" class=" cursor-pointer ml-2.5 mt-1 text-[10px] font-normal text-blue-600 underline "> {{ linkText}}</span>
+    <div (click)="closeAlert()" class="text-black h-5 w-5 ml-2  cursor-pointer" >
       <app-svg-icon name="close"></app-svg-icon>
     </div>
   </div>
@@ -46,7 +46,7 @@
     <p class="text-xs font-semibold">
       Info - {{ message }}
     </p>
-    <span *ngIf="linkText" routerLink="{{link}}" class=" cursor-pointer ml-2.5 mt-1 text-[10px] font-normal text-blue-600 underline "> {{ linkText}}</span>
+    <span *ngIf="linkText" [routerLink]="link" class=" cursor-pointer ml-2.5 mt-1 text-[10px] font-normal text-blue-600 underline "> {{ linkText}}</span>
     <div (click)="closeAlert()" class="text-blue-950 h-5 w-5 ml-2  cursor-pointer" >
       <app-svg-icon name="close"></app-svg-icon>
     </div>

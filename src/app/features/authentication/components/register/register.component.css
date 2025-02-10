@@ -1,11 +1,17 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css');
 
+.background-container {
+  background-size: cover;         
+  background-position: center; 
+  background-repeat: no-repeat;
+  position: relative; 
+}
 .scrollbar-hide {
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
-    overflow-y: scroll; 
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }  
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+  overflow-y: scroll; 
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}  

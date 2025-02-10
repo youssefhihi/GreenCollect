@@ -23,9 +23,9 @@ export class PointsService {
         if (existing) {
           const updatedPoints = { ...existing, totalPoints: existing.totalPoints + newPoints };
           console.log("updatedPoints",updatedPoints);
-          return this.http.put<UserPoints>(`${this.apiUrl}/${existing.userId}`, updatedPoints);
+          return this.http.put<UserPoints>(`${this.apiUrl}/${existing.id}`, updatedPoints);
         } else {
-          const newEntry: UserPoints = { userId, totalPoints: newPoints };
+          const newEntry: UserPoints = { id: '', userId, totalPoints: newPoints };
           console.log("newEntry",newEntry);
           return this.http.post<UserPoints>(this.apiUrl, newEntry);
         }

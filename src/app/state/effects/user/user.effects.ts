@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UpdateProfileActions, UserActions } from '../../actions/user/user.actions';
 import { catchError, map, merge, mergeMap, of, tap } from 'rxjs';
 import { AuthService } from '../../../features/authentication/services/authentication/auth.service';
+import { Router } from '@angular/router';
 
 
 
@@ -11,21 +12,25 @@ export class UserEffects {
 
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
 
 
-  login$ = createEffect(() => {
-    return this.actions$.pipe(
-    ofType(UserActions.userLogin),
-    tap((action) => console.log('User login action', action)),
-    mergeMap((action) => 
-      this.authService.login(action.email, action.password).pipe(
-        map((data) => UserActions.userLoginSuccess({ data })),
-        catchError((error) => of(UserActions.userLoginFailure({ error })))
+    login$ = createEffect(() => {
+      return this.actions$.pipe(
+      ofType(UserActions.userLogin),
+      tap((action) => console.log('User login action', action)),
+      mergeMap((action) => 
+        this.authService.login(action.email, action.password).pipe(
+          map((data) => {
+              this.router.navigate(['/']); 
+               return UserActions.userLoginSuccess({ data });
+            }),
+          catchError((error) => of(UserActions.userLoginFailure({ error })))
+        )
       )
-    )
-    );
-  });
+      );
+    });
 
   register$ = createEffect(() => {
     return this.actions$.pipe(
