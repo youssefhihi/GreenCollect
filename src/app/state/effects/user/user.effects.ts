@@ -4,6 +4,7 @@ import { UpdateProfileActions, UserActions } from '../../actions/user/user.actio
 import { catchError, map, merge, mergeMap, of, tap } from 'rxjs';
 import { AuthService } from '../../../features/authentication/services/authentication/auth.service';
 import { Router } from '@angular/router';
+import { UserInfoService } from '../../../core/service/user-info.service';
 
 
 
@@ -12,6 +13,7 @@ export class UserEffects {
 
   private actions$ = inject(Actions);
   private authService = inject(AuthService);
+  private userService = inject(UserInfoService);
   private router = inject(Router);
 
 
@@ -50,7 +52,7 @@ export class UserEffects {
     ofType(UpdateProfileActions.updateProfile),
     tap((action) => console.log('Update profile action', action)),  
     mergeMap((action) => 
-      this.authService.updateProfile(action.data).pipe(
+      this.userService.updateProfile(action.data).pipe(
         map((data) => UpdateProfileActions.updateProfileSuccess({ data })),
         catchError((error) => of(UpdateProfileActions.updateProfileFailure({ error })))
       )

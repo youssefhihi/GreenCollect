@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, firstValueFrom, map, Observable, of, throwError } from 'rxjs';
+import { catchError, firstValueFrom, forkJoin, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { User } from '../../model/user/user.model';
+import { Collect } from '../../model/collect/collect.modul';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +62,41 @@ export class UserInfoService {
     return of(false); 
   }
   
+  updateProfile(user: User): Observable<User> {
+    return this.getUserByEmail(user.email).pipe(
+      switchMap(existingUser => {
+        if (!existingUser) {
+          throw new Error('User not found');
+        }
+  
+        return this.http.put<User>(`${this.apiUrl}/users/${existingUser.id}`, user).pipe(
+          switchMap(updatedUser => {
+            return this.http.get<Collect[]>(`${this.apiUrl}/collects`).pipe(
+              switchMap(collects => {
+                const updatedCollects = collects
+                  .filter(collect => collect.user.email === updatedUser.email)
+                  .map(collect => ({
+                    ...collect,
+                    user: updatedUser
+                  }));
+  
+                if (updatedCollects.length === 0) {
+                  return of(updatedUser);
+                }
+  
+                return forkJoin(
+                  updatedCollects.map(collect =>
+                    this.http.put<Collect>(`${this.apiUrl}/collects/${collect.id}`, collect)
+                  )
+                ).pipe(map(() => updatedUser));
+              })
+            );
+          })
+        );
+      }),
+      catchError(error => throwError(() => new Error(error.message || 'User update failed')))
+    );
+  }
   
 
 

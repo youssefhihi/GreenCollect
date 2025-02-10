@@ -55,21 +55,7 @@ export class AuthService {
       catchError(error => throwError(() => new Error(error.message || 'User not found')))
     )
   }
-  updateProfile(user: User): Observable<User> {
-   return  this.getUserByEmail(user.email).pipe(
-      switchMap(existingUser => {
-        if (existingUser) {
-          return this.http.put<User>(`${this.apiUrl}/users/${existingUser.id}`, user).pipe(
-            map(() => user)
-          );
-        } else {
-          throw new Error('User not found');
-        }
-      }),
-      catchError(error => throwError(() => new Error(error.message || 'User not found')))
-    )
-    
-  }
+
   
   private generateToken(user: User): string {
     return btoa(`${user.email}:${user.password}`);

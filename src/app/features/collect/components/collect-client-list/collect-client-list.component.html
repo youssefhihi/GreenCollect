@@ -24,8 +24,13 @@
 </nav>
 <!-- Section Collectes -->
 <section id="collects" class="py-20 bg-gray-100 min-h-screen">
-  <div *ngIf="(points$ | async) != null" class=" pl-10 text-left text-md text-black font-bold">
-    votre points actuals : <span class="text-green-600">{{(points$ | async)?.totalPoints}} Points</span> 
+  <div class="flex justify-evenly max-w-xl">
+    <div *ngIf="(points$ | async) != null" class=" pl-10 text-left text-md text-black font-bold">
+      votre points actuals : <span class="text-green-600">{{(points$ | async)?.totalPoints}} Points</span> 
+    </div>
+    <div *ngIf="money != 0" class=" pl-10 text-left text-md text-black font-bold">
+      votre solde : <span class="text-green-600">{{money}} DH</span> 
+    </div>
   </div>
   <div class="container mx-auto text-center px-6">
     <div *ngIf="success$ | async as msg">
