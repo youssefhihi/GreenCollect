@@ -73,7 +73,7 @@ export class CollectService {
   getCollections(city: string): Observable<Collect[]> {
     console.log("city",city);
    return this.http.get<Collect[]>(this.apiUrl).pipe(
-      map((collects) => collects.filter(c => c.user.address.city === city))
+    map((collects) => collects.filter(c => c.user.address.city === city && c.status !== 'Validée'))
     );;
   }
 
