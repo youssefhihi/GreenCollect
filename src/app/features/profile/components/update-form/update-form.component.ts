@@ -4,6 +4,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserInfoService } from '../../../../core/service/user-info.service';
 import { UpdateProfileActions } from '../../../../state/actions/user/user.actions';
+import { selectUserError, selectUserSuccess } from '../../../../state/selectors/user/user.selectors';
 
 @Component({
   selector: 'app-update-form',
@@ -17,9 +18,10 @@ export class UpdateFormComponent {
   private userInfo = inject(UserInfoService);
   private store = inject(Store);
 
-  profileImage: string = 'assets/imgs/noImg.jpg';
+  profileImage: string = '';
   authUser : User | null = null;
-
+  error$ = this.store.select(selectUserError);
+  success$ = this.store.select(selectUserSuccess);
   formGroup = this.fb.group({
       fullName: this.fb.group({
         firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -40,7 +42,9 @@ export class UpdateFormComponent {
         if (!user) return;
         this.formGroup.patchValue(user);
         this.authUser = user;
+        this.profileImage = user.profileImage || 'assets/imgs/noImg.jpg';
       });
+      
     }
 
  onFileChange(event: any) {

@@ -24,14 +24,15 @@ export const userReducer = createReducer(
   initialState,
   on(UserActions.userLogin, state => (
     console.log('User login action'),
-    { ...state, loading: true }
+    { ...state, loading: true , success: null}
   )),
   on(UserActions.userLoginSuccess, (state, { data }) => ({
     ...state,
     loading: false,
     data : data,
     isAuthenticated: true,
-    error: null
+    error: null,
+    success: null
   })),
   on(UserActions.userLoginFailure, (state, { error }) => ({
     ...state,
@@ -57,6 +58,7 @@ export const userReducer = createReducer(
     data: null,
     isAuthenticated: false,
     success: null,
+    
   })),
   on(UpdateProfileActions.updateProfile, state => ({ ...state, loading: true })),
   on(UpdateProfileActions.updateProfileSuccess, (state, { data }) => ({
@@ -64,7 +66,8 @@ export const userReducer = createReducer(
     loading: false,
     data: data,
     isAuthenticated: true,
-    error: null
+    error: null,
+    success: "Profil mis à jour avec succéss"
   })),
   on(UpdateProfileActions.updateProfileFailure, (state, { error }) => ({
     ...state,
@@ -72,6 +75,7 @@ export const userReducer = createReducer(
     error: error,
     data: null,
     isAuthenticated: true,
+    success: null
   }))
 );
 

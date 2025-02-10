@@ -17,10 +17,11 @@ export class CollectClientListComponent {
   private route = inject(ActivatedRoute);
   private store = inject(Store);
 
-
-  collectRequests: Collect[] = [];
-  successMessage: string | null = null;
+  money = 0;
   points$ = this.store.select(selectUserPoints);
+  
+    collectRequests: Collect[] = [];
+    successMessage: string | null = null;
   success$ = this.store.select(selectCollectSuccess);
 
   constructor() {
@@ -28,7 +29,32 @@ export class CollectClientListComponent {
       this.collectRequests = data['collectRequests'];;
     });
   }
+  calculateMoneyFromPoints(points: number): number {
+    let money = 0;
+  
+    // Priorité aux bons de valeur la plus élevée
+    while (points >= 500) {
+      money += 350;
+      points -= 500;
+    }
+    while (points >= 200) {
+      money += 120;
+      points -= 200;
+    }
+    while (points >= 100) {
+      money += 50;
+      points -= 100;
+    }
+  
+    return money;
+  }
+  
   ngOnInit() {
+    this.points$.subscribe(points => {
+      if (points !== null && points !== undefined) {
+        this.money = this.calculateMoneyFromPoints(points.totalPoints);
+      }
+    });
     this.store.dispatch(PointsActions.loadUserPoints({ userId: this.collectRequests[0].user.id }));
     }
   onCollectDeleted(deletedCollectId: string) {

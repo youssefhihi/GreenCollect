@@ -5,6 +5,11 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateFormComponent } from './components/update-form/update-form.component';
+import { SharedModule } from '../../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { userReducer } from '../../state/reducers/user/user.reducer';
+import { UserEffects } from '../../state/effects/user/user.effects';
 
 
 @NgModule({
@@ -15,7 +20,10 @@ import { UpdateFormComponent } from './components/update-form/update-form.compon
   imports: [
     CommonModule,
     ProfileRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature('user', userReducer),
+    EffectsModule.forFeature([UserEffects]),
+    SharedModule
   ]
 })
 export class ProfileModule {}
