@@ -37,6 +37,7 @@ export const collectReducer = createReducer(
   on(CollectActions.collectAddCollectsSuccess, (state, { data }) => ({ 
     ...state,
     loading: false,
+    success: 'La Collection a bien été ajoutée',
     collects: [...state.collects, data],
   })),
   on(CollectActions.collectAddCollectsFailure, (state, { error }) => ({ 

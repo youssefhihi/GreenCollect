@@ -44,27 +44,23 @@ export class UserInfoService {
 
  
 
-  isAuthenticated(): boolean {
+  isAuthenticated(): Observable<boolean> {
     const token = this.getToken();
     if (token !== null) {
       const decoded = atob(token);
       const [email, password] = decoded.split(':');
-  
+      
       if (!email || !password) {
-        console.error('Invalid token format');
-        return false;
+        return of(false); 
       }
-      this.getUserByEmail(email).pipe(
-        map((user) => {
-          if (user.password != password) {
-            return false;
-          }
-          return true;
-        })
+  
+      return this.getUserByEmail(email).pipe(
+        map((user) => user?.password === password)
       );
     }
-    return false;
+    return of(false); 
   }
+  
   
 
 

@@ -5,6 +5,7 @@ import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 import { CollectActions, DeleteCollectActions, UpdateCollectStatusActions } from '../../actions/collect/collect.actions';
 import { PointsActions } from '../../actions/points/points.actions';
 import { Collect } from '../../../model/collect/collect.modul';
+import { Router } from '@angular/router';
 
 
 
@@ -13,11 +14,13 @@ export class CollectEffects {
 
   private actions$ = inject(Actions);
   private service = inject(CollectService);
-
+ private router = inject(Router);
   addCollect$ = createEffect(() => this.actions$.pipe(
     ofType(CollectActions.collectAddCollects),
     mergeMap(({ data }) => this.service.addCollectRequest(data).pipe(
-      map((data) => CollectActions.collectAddCollectsSuccess({ data })),
+      map((data) => {
+        this.router.navigate(['/collect/list']);
+        return CollectActions.collectAddCollectsSuccess({ data });}),
       catchError((error) => of(CollectActions.collectAddCollectsFailure({ error })))
     ))
   ));

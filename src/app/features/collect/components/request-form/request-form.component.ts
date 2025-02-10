@@ -1,3 +1,4 @@
+import { selectCollectError, selectCollectSuccess } from './../../../../state/selectors/collect/collect.selectors';
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,6 +25,9 @@ export class RequestFormComponent {
   private userInfo = inject(UserInfoService);
   private store = inject(Store);
 
+  error$ = this.store.select(selectCollectError);
+  success$ = this.store.select(selectCollectSuccess);
+
   isSubmitted = false;
   selectedWasteTypes: string[] = []; 
 
@@ -35,9 +39,7 @@ export class RequestFormComponent {
     } else {
       this.selectedWasteTypes = this.selectedWasteTypes.filter(t => t !== type);
     }
-  
-    // Met à jour le formulaire avec les valeurs sélectionnées
-    this.collectForm.controls['wasteType'].setValue(this.selectedWasteTypes);
+      this.collectForm.controls['wasteType'].setValue(this.selectedWasteTypes);
   }
   ngOnInit() {
     this.userInfo.getAuthUser().subscribe((user) => {
@@ -92,8 +94,6 @@ export class RequestFormComponent {
       return;
     }
       this.store.dispatch(CollectActions.collectAddCollects({ data: this.collectForm.value }));
-  
-    console.log('✅ Formulaire valide', this.collectForm.value);
   }
   
   private logInvalidControls(form: FormGroup, parentKey = '') {

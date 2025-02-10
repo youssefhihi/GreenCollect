@@ -7,6 +7,7 @@ import { UserActions } from '../../../../state/actions/user/user.actions';
 import { confirmPasswordValidator } from '../../../../shared/utils/validation/confirmPasswordValidation';
 import { User } from '../../../../model/user/user.model';
 import { UserType } from '../../../../model/enum/userType.enum';
+import { getErrorMessage, isFieldInvalid } from '../../../../shared/utils/validation/validateFields';
 
 @Component({
   selector: 'app-register',
@@ -52,5 +53,12 @@ export class RegisterComponent {
     this.store.dispatch(UserActions.userRegister({user}));    
   }
 
+ isFieldInvalid(field: string): boolean {
+    return isFieldInvalid(field, this.registerForm, this.isSubmitted);
+  }
+  
 
+  getErrorMessage(field: string): string | null {
+   return getErrorMessage(this.registerForm, field);
+  }
 }
