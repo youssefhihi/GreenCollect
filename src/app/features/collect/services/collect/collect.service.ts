@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserInfoService } from '../../../../core/service/user-info.service';
 import { environment } from '../../../../../environments/environment';
-import { catchError, map, Observable, switchMap } from 'rxjs';
+import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -50,20 +50,23 @@ export class CollectService {
       }
 
 
-  getUserCollections(): Observable<Collect[]> {
-    return this.userInfoService.getAuthUser().pipe(
-      switchMap((user: User) => {
-        if (!user) {
-          throw new Error("Utilisateur non connecté.");
-        }
-        return this.http.get<Collect[]>(`${this.apiUrl}?userId=${user.id}`);
-      }),
-      catchError((error) => {
-        console.error("Error in getUserCollections:", error);
-        throw error;
-      })
-    );
-  }
+      getUserCollections(): Observable<Collect[]> {
+        return this.userInfoService.getAuthUser().pipe(
+          switchMap((user: User | null) => {
+            if (!user) {
+              throw new Error("Utilisateur non connecté.");
+            }
+            return this.http.get<Collect[]>(this.apiUrl).pipe(
+              map((collects) => collects.filter(collect => collect.user.id === user.id))
+            );
+          }),
+          catchError((error) => {
+            console.error("Error in getUserCollections:", error);
+            return throwError(() => new Error("Erreur lors de la récupération des collectes."));
+          })
+        );
+      }
+      
 
   requestCollection(request: Collect): Observable<Collect> {
     return this.http.post<Collect>(`${this.apiUrl}`, request);
